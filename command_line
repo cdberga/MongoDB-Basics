@@ -1,0 +1,64 @@
+Proximo: https://university.mongodb.com/courses/MongoDB/M001/2017_August_2/courseware/Chapter_3_Deeper_Dive_on_the_MongoDB_Query_Language/595aae2236942e83e9a361f4/vertical_7aa83cce25fd
+
+
+###########
+mongo "mongodb://cluster0-shard-00-00-jxeqq.mongodb.net:27017,cluster0-shard-00-01-jxeqq.mongodb.net:27017,cluster0-shard-00-02-jxeqq.mongodb.net:27017/test?replicaSet=Cluster0-shard-0" --authenticationDatabase admin --ssl --username m001-student --password m001-mongodb-basics
+
+###########
+Criando o Atlas Cluster
+
+
+Quiz: Quiz: Lab 2.0: Create an Atlas Sandbox Cluster (Ungraded)
+
+Please note that, while we've labeled this as a lab, it is ungraded. This writeup is here simply to get you started on creating an Atlas cluster.
+
+    Go to https://cloud.mongodb.com/links/registerForAtlas and complete the account creation form you see on that page. Please make sure you see the message "Sign up for MongoDB Atlas" at the top of the page.
+    Once you have completed the registration form, in the next page that appears, you will be asked to choose a new group name. We use groups to manage access to Atlas clusters. Please use the name, m001-sandbox.
+    Once you have created a group, in the next page, enter the name, Sandbox for your cluster.
+    On the same page, select the M0 instance size. Note that the "Pricing" now changes to say "$0.00/forever". You do NOT need to enter a credit card to create a free-tier Atlas cluster (M0). They are free.
+    Scroll to the bottom of the cluster-creation form and enter an administrative username and password. Please enter the username, m001-student and the password, m001-mongodb-basics
+    Once you've entered your username and password, click Confirm & Deploy. You will need to wait a few minutes for your cluster to be spun up.
+    Once your cluster is ready, click on the Security tab and then on the IP Whitelist tab. Click the ADD IP ADDRESS button and, then, in the modal that pops up, click ALLOW ACCESS FROM ANYWHERE. Click the CONFIRM button and wait while the security settings for your cluster are configured.
+
+Note that we do not generally recommend opening an Atlas cluster to allow access from anywhere. We do that for this class to minimize network issues that you might run into.
+
+########
+Carregando o banco
+
+mongo "mongodb://sandbox-shard-00-00-yfksq.mongodb.net:27017,sandbox-shard-00-01-yfksq.mongodb.net:27017,sandbox-shard-00-02-yfksq.mongodb.net:27017/test?replicaSet=Sandbox-shard-0" --authenticationDatabase admin --ssl --username m001-student --password m001-mongodb-basics
+ 
+
+show dbs
+use video
+load("loadMovieDetailsDataset.js")
+db.movieDetails.find()
+
+db.moviesScratch.insertOne({_id: "tt0084726", title: "Star Trek II: The Wrath of Khan", year: 1982, imdb: "tt0084726"})
+
+db.moviesScratch.insertMany([{},{},{}])
+
+##########
+db.movies.find({mpaaRating: "PG-13", year: 2009}).pretty()
+
+db.movieDetails.find({"awards.wins": 2, "awards.nominations": 2}).count()
+
+
+#########
+db.movies.find({cast: ["Jeff Brigdes", "Tim Robbins"]}).pretty()
+db.movies.find({"cast.0": "Jeff Brigdes"}).pretty()
+
+to your Atlas sandbox cluster, you can issue the following query.
+
+db.movieDetails.find({writers:["Ethan Coen","Joel Coen"]}).count()
+
+In Compass you can use the following filter in the Documents tab for the movieDetails collection.
+
+{writers:["Ethan Coen","Joel Coen"]}
+
+proejctions:
+
+db.movies.find({genre: "Action, Adventure"}, {title: 1, _id: 0})
+
+See: Update Operators on mongodb documentation
+
+For update operations, update operators specify how to modify specific fields in documents matching a filter. Fields may be added, deleted, or have their value changed in some way. Update operators define what modifications to make with respect to one or more fields in matching documents.
