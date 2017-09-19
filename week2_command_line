@@ -1,4 +1,4 @@
-Proximo: Week 3: Array operators: $all
+Proximo: https://university.mongodb.com/courses/MongoDB/M001/2017_August_2/courseware/Chapter_3_Deeper_Dive_on_the_MongoDB_Query_Language/595aae2236942e83e9a361f4/vertical_7aa83cce25fd
 
 
 ###########
@@ -62,41 +62,3 @@ db.movies.find({genre: "Action, Adventure"}, {title: 1, _id: 0})
 See: Update Operators on mongodb documentation
 
 For update operations, update operators specify how to modify specific fields in documents matching a filter. Fields may be added, deleted, or have their value changed in some way. Update operators define what modifications to make with respect to one or more fields in matching documents.
-
-#########################
-Week 3
-
-use video
-
-db.movieDetails.find({writers: {$in: ["Ethan Coen", "Joel Coen"]}}).count()
-
-use 100YWeatherSmall
-
-db.data.find({atmosphericPressureChange: {$exists: false}}).count()
-
-use ships
-
-db.shipwrecks.find({$or: [{depth: 0}, {watlev: "always dry"}]}).count()
-
-use 100YWeatherSmall
-
-db.data.find({sections: {$all: ["AG1", "MD1", "OA1"]}}).count()
-
-use 100YWeatherSmall
-
-db.data.find({sections: {$size: 2}}).count()
-
-use results
-
-db.surveys.find({results: {$elemMatch: {product: "abc", score: 7}}}).count()
-
-use results
-
-db.scores.find({results: {$elemMatch: {$gte: 70, $lt: 80}}}).count()
-
-db.movies.find({$and: [{cast: {$in: ["Jack Nicholson", "John Huston"]}},
-                        {viewerRating: {$gt: 7}},
-                        {mpaaRating: "R"}
-                        ]
-                }
-            )
